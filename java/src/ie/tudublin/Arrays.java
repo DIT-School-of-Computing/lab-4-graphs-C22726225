@@ -98,8 +98,13 @@ public class Arrays extends PApplet
 		float rightOffset = width - (width * 0.1f);
 		float w = (rightOffset - leftOffset) / months.length;
 		float h = height - (height * 0.1f);
+		float barOffset = h;
+		line(map(0, 0, months.length, leftOffset - 1, rightOffset), h, map(0, 0, months.length, leftOffset - 1, rightOffset), height * 0.1f);
+		
 		for(int i = 0 ; i < months.length ;  i ++)
 		{
+			line(map(0, 0, months.length, leftOffset - 1, rightOffset), barOffset, leftOffset - 10, barOffset);
+			barOffset -= 35;
 			fill(map(i, 0, months.length, 0, 255), 255, 255);
 			float x = map1(i, 0, months.length, leftOffset, rightOffset);
 			rect(x, h, w, -rainfall[i]);
