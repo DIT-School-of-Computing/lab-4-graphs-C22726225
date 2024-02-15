@@ -22,7 +22,7 @@ public class Arrays extends PApplet
 	void randomize()
 	{
 		for (int i = 0; i < rainfall.length; i++) {
-			rainfall[i] = random(500);
+			rainfall[i] = random(400);
 		}
 	}
 
@@ -62,7 +62,6 @@ public class Arrays extends PApplet
 		println("The month with the minimum rainfall was " + months[minIndex] + " with " + rainfall[minIndex] + "rain");
 		println("The month with the max rainfall was " + months[maxIndex] + " with " + rainfall[maxIndex] + "rain");
 		
-		
 		float tot = 0;
 		for(float f:rainfall)
 		{
@@ -88,20 +87,20 @@ public class Arrays extends PApplet
 		colorMode(HSB);
 		background(0);
 		randomize();
-		
-		
 	}
-
 	
 	public void draw()
 	{	
 
 		background(0);
-		float w = width / (float)months.length;
+		float leftOffset = width * 0.1f;
+		float rightOffset = width - (width * 0.1f);
+		float w = (rightOffset - leftOffset) / months.length;
+		float h = height - 50;
 		for(int i = 0 ; i < months.length ;  i ++)
 		{
-			float x = map1(i, 0, months.length, 0, width);
-			rect(x, height, w, -rainfall[i]);
+			float x = map1(i, 0, months.length, leftOffset, rightOffset);
+			rect(x, h, w, -rainfall[i]);
 		}
 	}
 }
