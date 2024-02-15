@@ -31,7 +31,7 @@ public class Arrays extends PApplet
 		size(500, 500);
 
 		String[] m1 = months;
-		months[0] = "XXX";
+		// months[0] = "XXX";
 		print(m1[0]);
 		for(int i = 0; i < months.length; i ++)
 		{
@@ -99,15 +99,29 @@ public class Arrays extends PApplet
 		float w = (rightOffset - leftOffset) / months.length;
 		float h = height - (height * 0.1f);
 		float barOffset = h;
+		float monthOffset = barOffset + (height * 0.05f);
+		int numMeasure = 0;
 		line(map(0, 0, months.length, leftOffset - 1, rightOffset), h, map(0, 0, months.length, leftOffset - 1, rightOffset), height * 0.1f);
+		noFill();
+		fill (0, 0, 1000);
+		text("Rainfall Bar Chart", (width/2.3f), height * 0.05f);
 		
 		for(int i = 0 ; i < months.length ;  i ++)
 		{
+			fill (0, 0, 1000);
 			line(map(0, 0, months.length, leftOffset - 1, rightOffset), barOffset, leftOffset - 10, barOffset);
-			barOffset -= 35;
+			
+			text(numMeasure, map(0, 0, months.length, leftOffset - (width * 0.08f), rightOffset), barOffset);
+			if (i < months.length - 4)
+			{
+				numMeasure += 20;
+				barOffset -= height * 0.1f;
+			}
 			fill(map(i, 0, months.length, 0, 255), 255, 255);
 			float x = map1(i, 0, months.length, leftOffset, rightOffset);
 			rect(x, h, w, -rainfall[i]);
+			fill (0, 0, 1000);
+			text(months[i], x + (width * 0.02f), monthOffset);
 		}
 	}
 }
