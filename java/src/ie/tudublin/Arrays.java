@@ -10,6 +10,8 @@ public class Arrays extends PApplet
 
 	float[] rainfall = {200, 260, 300, 150, 100, 50, 10, 40, 67, 160, 400, 420};
 
+	int mode = 0;
+
 	public float map1(float a, float b, float c, float d, float e)
 	{
 		float r1 = c -b;
@@ -23,6 +25,12 @@ public class Arrays extends PApplet
 	{
 		for (int i = 0; i < rainfall.length; i++) {
 			rainfall[i] = random(400);
+		}
+	}
+
+	public void keyPressed() {
+		if (key >= '0' && key <= '9') {
+			mode = key - '0';
 		}
 	}
 
@@ -91,7 +99,6 @@ public class Arrays extends PApplet
 	
 	public void draw()
 	{	
-
 		background(0);
 		stroke(0,0,1000);
 		float leftOffset = width * 0.1f;
@@ -102,26 +109,58 @@ public class Arrays extends PApplet
 		float monthOffset = barOffset + (height * 0.05f);
 		int numMeasure = 0;
 		line(map(0, 0, months.length, leftOffset - 1, rightOffset), h, map(0, 0, months.length, leftOffset - 1, rightOffset), height * 0.1f);
-		noFill();
+		
 		fill (0, 0, 1000);
 		text("Rainfall Bar Chart", (width/2.3f), height * 0.05f);
 		
-		for(int i = 0 ; i < months.length ;  i ++)
+		switch(mode)
 		{
-			fill (0, 0, 1000);
-			line(map(0, 0, months.length, leftOffset - 1, rightOffset), barOffset, leftOffset - 10, barOffset);
-			
-			text(numMeasure, map(0, 0, months.length, leftOffset - (width * 0.08f), rightOffset), barOffset);
-			if (i < months.length - 4)
+			case 1:
 			{
-				numMeasure += 20;
-				barOffset -= height * 0.1f;
+				for(int i = 0 ; i < months.length ;  i ++)
+				{
+					fill (0, 0, 1000);
+					line(map(0, 0, months.length, leftOffset - 1, rightOffset), barOffset, leftOffset - 10, barOffset);
+					
+					text(numMeasure, map(0, 0, months.length, leftOffset - (width * 0.08f), rightOffset), barOffset);
+					if (i < months.length - 4)
+					{
+						numMeasure += 20;
+						barOffset -= height * 0.1f;
+					}
+					fill(map(i, 0, months.length, 0, 255), 255, 255);
+					float x = map1(i, 0, months.length, leftOffset, rightOffset);
+					rect(x, h, w, -rainfall[i]);
+					fill (0, 0, 1000);
+					text(months[i], x + (width * 0.02f), monthOffset);
+				}
 			}
-			fill(map(i, 0, months.length, 0, 255), 255, 255);
-			float x = map1(i, 0, months.length, leftOffset, rightOffset);
-			rect(x, h, w, -rainfall[i]);
-			fill (0, 0, 1000);
-			text(months[i], x + (width * 0.02f), monthOffset);
+			case 2:
+			{
+				
+				for(int i = 1 ; i < months.length ;  i ++)
+				{
+					fill (0, 0, 1000);
+					line(map(0, 0, months.length, leftOffset - 1, rightOffset), barOffset, leftOffset - 10, barOffset);
+					
+					text(numMeasure, map(0, 0, months.length, leftOffset - (width * 0.08f), rightOffset), barOffset);
+					if (i < months.length - 3)
+					{
+						numMeasure += 20;
+						barOffset -= height * 0.1f;
+					}
+					fill(map(i, 0, months.length, 0, 255), 255, 255);
+					float x2 = map1(i, 0, months.length, leftOffset, rightOffset);
+					float lastX = map1((i - 1), 0, months.length, leftOffset, rightOffset);
+					
+					line(lastX, -rainfall[i - 1], x2, -rainfall[i]);
+					fill (0, 0, 1000);
+					line (leftOffset, h, rightOffset, h);
+					text(months[i - 1], x2 + (width * 0.02f), monthOffset);
+				}
+			}
 		}
+
+		
 	}
 }
